@@ -15,6 +15,17 @@ app.get("/", function(req,res){
    })
 })
 
+app.get("/edit/:filename", function(req,res){
+  res.render('edit',{filename: req.params.filename})
+})
+
+app.post("/edit", function(req,res,err){
+  fs.rename(`./files/${req.body.previous}`,`./files/${req.body.Newname}`, function(err){
+    res.redirect("/")
+  })
+})
+
+
 app.get("/files/:filename", function(req,res){
   fs.readFile(`./files/${req.params.filename}`,"utf-8",function(err, filedata){
    res.render('show', {filename: req.params.filename, filedata: filedata});
